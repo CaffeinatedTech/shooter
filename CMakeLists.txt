@@ -3,7 +3,7 @@ project(shooter)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(shooter src/main.cpp src/engine.cpp headers/engine.hpp)
+add_executable(shooter src/main.cpp src/engine.cpp headers/engine.hpp src/update.cpp src/draw.cpp)
 
 include_directories(headers /usr/include)
 
