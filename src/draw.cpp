@@ -6,6 +6,7 @@ void Engine::draw() {
   window.setView(mainView);
 
   window.draw(backgroundSprite);
+  window.draw(player.getSprite());
 
   // Draw GUI
   window.setView(window.getDefaultView());
