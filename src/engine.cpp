@@ -12,8 +12,16 @@ Engine::Engine() {
 
   window.create(VideoMode(resolution.x, resolution.y), "Shooter", Style::Default);
   window.setFramerateLimit(FPS);
-
   mainView.setSize(resolution);
+
+  mainFont.loadFromFile("assets/fonts/slant_regular.ttf");
+
+  displayedScore = 0;
+
+  // Score Text
+  setupFont(&scoreText, mainFont, std::to_string(displayedScore), 72, Color::Green);
+  FloatRect scoreTextBounds = scoreText.getLocalBounds();
+  scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
 
   intermissionTime = 6; // Number of seconds between waves
   runningTime = Time::Zero;
@@ -37,5 +45,12 @@ void Engine::run() {
 
     draw();
   }
+}
+
+void Engine::setupFont(Text *textItem, const Font &font, const String &value, int size, Color colour) {
+  textItem->setFont(font);
+  textItem->setString(value);
+  textItem->setCharacterSize(size);
+  textItem->setFillColor(colour);
 }
 
