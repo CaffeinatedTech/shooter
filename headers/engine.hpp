@@ -30,9 +30,12 @@ private:
     int waveKills;
     long long unsigned int waveScore;
 
+    int gameState;
+    int previousGameState;
 
 
 public:
+    enum STATE { RUNNING, PAUSED, INTERMISSION, GAMEOVER, TITLE };
     Engine();
 
     void input();
@@ -41,6 +44,11 @@ public:
 
     // The main loop will be in the run function
     void run();
+
+    int getGameState();
+    void setGameState(int newGameState);
+
+    void togglePause();
 
     void setupFont(Text *textItem, const Font &font, const String &value, int size, Color colour);
 

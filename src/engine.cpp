@@ -27,6 +27,10 @@ Engine::Engine() {
   runningTime = Time::Zero;
   waveTime = Time::Zero;
   intermissionRunningTime = Time::Zero;
+
+  // Set game state to running
+  gameState = STATE::RUNNING;
+  previousGameState = gameState;
 }
 
 void Engine::run() {
@@ -36,6 +40,14 @@ void Engine::run() {
 
   // Main Loop - Runs until the window is closed
   while (window.isOpen()) {
+    // If we are paused, then check for input so we can un-pause and just go to the next loop
+    if (this->getGameState() == STATE::PAUSED || this->getGameState() == STATE::GAMEOVER) {
+      input();
+      draw();
+      sleep(milliseconds(5)); // Sleep so we don't peg the CPU
+      continue;
+    }
+
     input();
     // Make sure that update is run smoothly if the game is running too fast or slow
     while (timeSinceLastUpdate > TimePerFrame) {
@@ -44,6 +56,24 @@ void Engine::run() {
     }
 
     draw();
+  }
+}
+
+int Engine::getGameState() {
+  return this->gameState;
+}
+
+void Engine::setGameState(int newGameState) {
+  this->gameState = newGameState;
+}
+
+void Engine::togglePause() {
+  if (this->getGameState() == STATE::PAUSED) {
+    this->setGameState(this->previousGameState);
+  }
+  else {
+    this->previousGameState = this->getGameState();
+    this->setGameState(STATE::PAUSED);
   }
 }
 
