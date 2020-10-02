@@ -13,8 +13,15 @@ private:
     Vector2f resolution;
     int levelWidth;
 
+    RenderWindow window;
+    View mainView;
     const unsigned int FPS = 60;
     static const Time TimePerFrame;
+
+    Font mainFont;
+    Text scoreText;
+    unsigned long long int displayedScore;
+
     Time runningTime;
     Time waveTime;
     int intermissionTime; // Number of seconds between waves.
@@ -23,9 +30,7 @@ private:
     int waveKills;
     long long unsigned int waveScore;
 
-    RenderWindow window;
 
-    View mainView;
 
 public:
     Engine();
@@ -36,6 +41,8 @@ public:
 
     // The main loop will be in the run function
     void run();
+
+    void setupFont(Text *textItem, const Font &font, const String &value, int size, Color colour);
 
 };
 
