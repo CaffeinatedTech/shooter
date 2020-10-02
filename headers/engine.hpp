@@ -30,6 +30,7 @@ private:
 public:
     Engine();
 
+    void input();
     void update(Time dt);
     void draw();
 
