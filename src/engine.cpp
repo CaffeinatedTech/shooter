@@ -28,7 +28,7 @@ void Engine::run() {
 
   // Main Loop - Runs until the window is closed
   while (window.isOpen()) {
-    //input();
+    input();
     // Make sure that update is run smoothly if the game is running too fast or slow
     while (timeSinceLastUpdate > TimePerFrame) {
       timeSinceLastUpdate -= TimePerFrame;
