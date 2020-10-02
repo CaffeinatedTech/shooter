@@ -2,6 +2,7 @@
 #define SHOOTER_ENGINE_HPP
 
 #include "textureholder.hpp"
+#include "player.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -10,6 +11,8 @@ using namespace sf;
 class Engine {
 private:
     TextureHolder th;
+
+    Player player;
 
     Vector2f resolution;
     int levelWidth;
