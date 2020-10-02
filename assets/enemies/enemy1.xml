@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enemy>
+	<contributor>CaffeinatedTech</contributor>
+	<sprite>
+		<!-- The enemy sprite should be kept smaller than approx 150x150px and supplied in PNG format with transparent background -->
+		<!-- Don't leave too much empty space around the sprite, resize the canvas if you have to -->
+		<!-- One sprite per file, no spritesheets or animations -->
+		<!-- store the file in the 'enemies/sprites' directory with a unique name -->
+		<!-- royaltee free art only -->
+		<file>enemy1.png</file>
+		<!-- If the sprite should be rotated so that it is pointing towards the bottom of the screen -->
+		<rotation>180</rotation>
+	</sprite>
+	<stats>
+		<maxHealth>15</maxHealth>
+		<!-- Score to grant the player for every bullet that hits this enemy -->
+		<scorePerHit>13</scorePerHit>
+		<!-- Score to grant the player for destroying this enemy -->
+		<scorePerKill>10000</scorePerKill>
+		<!-- Speed is number of pixels per frame the ship moves down the screen.  Don't go crazy -->
+		<speed>5</speed>
+		<!-- The difficulty scale of this enemy 1 - 10.  Higher values make this enemy appear later in the game -->
+		<!-- Harder enemies should have a higher difficulty -->
+		<difficulty>1</difficulty>
+	</stats>
+	<abilities>
+		<canShoot>false</canShoot>
+		<shootAtPlayer>false</shootAtPlayer>
+		<!-- The offset in pixels from the center of the sprite where the bullets should come from -->
+		<gunPositionOffsetX>0</gunPositionOffsetX>
+		<gunPositionOffsetY>5</gunPositionOffsetY>
+	</abilities>
+</enemy>
