@@ -1,6 +1,7 @@
 #ifndef SHOOTER_ENGINE_HPP
 #define SHOOTER_ENGINE_HPP
 
+#include "textureholder.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -8,7 +9,7 @@ using namespace sf;
 
 class Engine {
 private:
-    //TextureHolder th;
+    TextureHolder th;
 
     Vector2f resolution;
     int levelWidth;
@@ -17,6 +18,11 @@ private:
     View mainView;
     const unsigned int FPS = 60;
     static const Time TimePerFrame;
+
+    Sprite backgroundSprite;
+    Texture backgroundTexture;
+    int backgroundY;
+    float backgroundSpeed;
 
     Font mainFont;
     Text scoreText;
