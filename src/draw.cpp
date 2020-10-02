@@ -5,6 +5,8 @@ void Engine::draw() {
 
   window.setView(mainView);
 
+  window.draw(backgroundSprite);
+
   // Draw GUI
   window.setView(window.getDefaultView());
   window.draw(scoreText);

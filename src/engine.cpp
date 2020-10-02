@@ -14,6 +14,14 @@ Engine::Engine() {
   window.setFramerateLimit(FPS);
   mainView.setSize(resolution);
 
+  backgroundTexture = TextureHolder::GetTexture("assets/backgrounds/sprites/stars.png");
+  backgroundTexture.setRepeated(true);
+  backgroundSprite.setTexture(backgroundTexture);
+  backgroundSprite.setPosition(0,-40);
+  backgroundY = 0;
+  backgroundSprite.setTextureRect(IntRect(0, backgroundY, levelWidth, resolution.y));
+  backgroundSpeed = 0.5f;
+
   mainFont.loadFromFile("assets/fonts/slant_regular.ttf");
 
   displayedScore = 0;
@@ -40,6 +48,7 @@ void Engine::run() {
 
   // Main Loop - Runs until the window is closed
   while (window.isOpen()) {
+    Time dt = clock.restart();
     // If we are paused, then check for input so we can un-pause and just go to the next loop
     if (this->getGameState() == STATE::PAUSED || this->getGameState() == STATE::GAMEOVER) {
       input();
@@ -48,10 +57,16 @@ void Engine::run() {
       continue;
     }
 
-    input();
+    timeSinceLastUpdate += dt;
+    runningTime += dt;
+    if (this->getGameState() == STATE::INTERMISSION) {
+      intermissionRunningTime += dt;
+    }
+
     // Make sure that update is run smoothly if the game is running too fast or slow
     while (timeSinceLastUpdate > TimePerFrame) {
       timeSinceLastUpdate -= TimePerFrame;
+      input();
       update(TimePerFrame);
     }
 
