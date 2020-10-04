@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enemy>
+	<contributor>Needmoar</contributor>
+	<sprite>
+		<!-- The enemy sprite should be kept smaller than approx 150x150px and supplied in PNG format with transparent background -->
+		<!-- Don't leave too much empty space around the sprite, resize the canvas if you have to -->
+		<!-- One sprite per file, no spritesheets or animations -->
+		<!-- store the file in the 'enemies/sprites' directory with a unique name -->
+		<!-- royaltee free art only -->
+		<file>PixelArt.png</file>
+		<!-- If the sprite should be rotated so that it is pointing towards the bottom of the screen -->
+		<rotation>0</rotation>
+	</sprite>
+	<stats>
+		<maxHealth>50</maxHealth>
+		<!-- Score to grant the player for every bullet that hits this enemy -->
+		<scorePerHit>25</scorePerHit>
+		<!-- Score to grant the player for destroying this enemy -->
+		<scorePerKill>25000</scorePerKill>
+		<!-- Speed is number of pixels per frame the ship moves down the screen.  Don't go crazy -->
+		<speed>3</speed>
+		<!-- The difficulty scale of this enemy 1 - 10.  Higher values make this enemy appear later in the game -->
+		<!-- Harder enemies should have a higher difficulty -->
+		<difficulty>4</difficulty>
+	</stats>
+	<abilities>
+		<canShoot>true</canShoot>
+		<shootAtPlayer>false</shootAtPlayer>
+		<!-- The offset in pixels from the center of the sprite where the bullets should come from -->
+		<gunPositionOffsetX>0</gunPositionOffsetX>
+		<gunPositionOffsetY>5</gunPositionOffsetY>
+	</abilities>
+</enemy>
