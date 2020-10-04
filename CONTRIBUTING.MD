@@ -12,7 +12,7 @@ Please do not supply copyrighted material.  All sprites in this project must be 
 Sprite images must be PNG format with transparency background.
 
 ### Procedure
-1. Form this repository
+1. Fork this repository
 2. Locate the `assets/enemies` directory
 3. copy the contents of `enemy1.xml`
 4. create a new file called for example `charlie.xml`
@@ -27,8 +27,8 @@ existing ones.  use the filename in the xml `enemy1.png` for example.
 9. Upload your sprite if any to `assets/enemies/sprites` directory
 10. Click `Pull Requests`
 11. Create a new Pull Request from your repo to mine
-12 .
-13 Profit
+12. ...
+13. Profit
 
 If you get stuck and have further questions, then please either hit me up on twitch `CaffeinatedTech`
 or twitter @CaffeinatedTech and I will help you out.
