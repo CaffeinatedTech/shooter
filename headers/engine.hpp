@@ -4,6 +4,7 @@
 #include "textureholder.hpp"
 #include "player.hpp"
 #include "bullet.hpp"
+#include "enemy.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -43,12 +44,12 @@ private:
     int gameState;
     int previousGameState;
 
-
 public:
     enum STATE { RUNNING, PAUSED, INTERMISSION, GAMEOVER, TITLE };
     Engine();
 
     vector<Bullet> bullets;
+    vector<Enemy> enemies;
 
     void input();
     void update(Time dt);
