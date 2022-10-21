@@ -27,4 +27,26 @@ void Engine::update(Time dt) {
   newMainViewPos.y = mainView.getCenter().y;
   mainView.setCenter(newMainViewPos);
 
+  // Player Shooting
+  if (player.getShooting()) {
+    // Don't shoot too often
+    if (player.getShootClock().asMilliseconds() > player.getShootSpeed()) {
+      bullets.emplace_back(true, player.getShootPosition(), Bullet::LASER1, false, Vector2f(0.0f, 1.0f));
+      player.restartShootClock();
+    }
+  }
+
+  // Process Bullets
+  for (int i = 0; i < bullets.size(); i++) {
+    if (bullets[i].getPosition().y < -150) {
+      bullets.erase(bullets.begin() + i);
+      continue;
+    }
+    else if (bullets[i].getPosition().y > this->resolution.y + 50) {
+      bullets.erase(bullets.begin() + i);
+    }
+
+    bullets[i].update(dt, this->resolution, this->resolution.y);
+  }
+
 } // END update

@@ -28,7 +28,24 @@ void Engine::input() {
         }
       }
 
+      // Shooting
+      if (Keyboard::isKeyPressed(Keyboard::Space)) {
+        if (!player.getShooting()) {
+          player.setShooting(true);
+        }
+      }
+
     } // END keyboard input
+
+    // Handle Keyboard Release
+    if (event.type == Event::KeyReleased) {
+      // Stop Shooting
+      if (event.key.code == Keyboard::Space) {
+        if (player.getShooting()) {
+          player.setShooting(false);
+        }
+      }
+    }
 
     // Player Movement
     if (Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::Left)) {

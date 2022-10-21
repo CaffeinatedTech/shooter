@@ -2,11 +2,78 @@
 #include "textureholder.hpp"
 
 Player::Player() {
+  lives = 3;
+  health = maxHealth = 100;
+  repairDelay = 1000; // Milliseconds before starting repair and between each repair tick
+  repairAmount = 5; // AMount repaired per tick
+  score = 0;
+
   position.x = 500;
   position.y = 900;
 
+  isShooting = false;
+
+  shootClock.restart();
+  repairClock.restart();
+
   playerSprite.setTexture(TextureHolder::GetTexture("assets/player/sprites/player1.png"));
   playerSprite.setPosition(position);
+}
+
+bool Player::getShooting() {
+  return this->isShooting;
+}
+
+void Player::setShooting(bool isShooting) {
+  this->isShooting = isShooting;
+  if (!isShooting) {
+    this->repairClock.restart();
+  }
+}
+
+Time Player::getShootClock() {
+  return this->shootClock.getElapsedTime();
+}
+
+Time Player::getRepairClock() {
+  return this->repairClock.getElapsedTime();
+}
+
+void Player::restartShootClock() {
+  this->shootClock.restart();
+}
+
+int Player::getShootSpeed() {
+  return this->shootSpeed;
+}
+
+Vector2f Player::getShootPosition() {
+  Vector2f newShootPosition = this->position;
+  return newShootPosition += {this->playerSprite.getLocalBounds().width / 2 - 7, 0};
+}
+
+int Player::getRepairDelay() {
+  return this->repairDelay;
+}
+
+int Player::getRepairAmount() {
+  return this->repairAmount;
+}
+
+void Player::repair(int amount) {
+  this->health += amount;
+  if (this->health > this->maxHealth) {
+    this->health = this->maxHealth;
+  }
+  this->repairClock.restart();
+}
+
+bool Player::takeDamage(int damage) {
+  bool isPlayerDead;
+  this->health -= damage;
+  isPlayerDead = this->health <= 0;
+  this->repairClock.restart();
+  return isPlayerDead;
 }
 
 Sprite Player::getSprite() {
