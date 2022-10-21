@@ -13,6 +13,11 @@ void Engine::draw() {
     window.draw(bullet.getSprite());
   }
 
+  // Draw Enemies
+  for (auto& enemy: enemies) {
+    window.draw(enemy.getSprite());
+  }
+
   // Draw GUI
   window.setView(window.getDefaultView());
   window.draw(scoreText);

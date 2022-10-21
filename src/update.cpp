@@ -49,4 +49,9 @@ void Engine::update(Time dt) {
     bullets[i].update(dt, this->resolution, this->resolution.y);
   }
 
+  // Process Enemies
+  for (int i = 0; i < enemies.size(); i++) {
+    enemies[i].update(dt, this->resolution);
+  }
+
 } // END update

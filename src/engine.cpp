@@ -39,6 +39,22 @@ Engine::Engine() {
   // Set game state to running
   gameState = STATE::RUNNING;
   previousGameState = gameState;
+
+// TODO - Build the enemy spawner
+  // Temporary enemy spawn - need to build a system to read in the enemy files
+  enemyConfig thisEnemyConfig;
+  thisEnemyConfig.file = "enemy1.png";
+  thisEnemyConfig.rotation = 180.f;
+  thisEnemyConfig.maxHealth = 15;
+  thisEnemyConfig.scorePerHit = 13;
+  thisEnemyConfig.scorePerKill = 10000;
+  thisEnemyConfig.speed = 5;
+  thisEnemyConfig.difficulty = 1;
+  thisEnemyConfig.canShoot = false;
+  thisEnemyConfig.shootAtPlayer = false;
+  thisEnemyConfig.gunPositionOffsetX = 0.f;
+  thisEnemyConfig.gunPositionOffsetY = 5.f;
+  this->enemies.emplace_back(Vector2f(300.f, 10.f), thisEnemyConfig);
 }
 
 void Engine::run() {
