@@ -3,6 +3,7 @@
 
 #include "textureholder.hpp"
 #include "player.hpp"
+#include "bullet.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -46,6 +47,8 @@ private:
 public:
     enum STATE { RUNNING, PAUSED, INTERMISSION, GAMEOVER, TITLE };
     Engine();
+
+    vector<Bullet> bullets;
 
     void input();
     void update(Time dt);
