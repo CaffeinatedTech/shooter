@@ -10,6 +10,7 @@ Enemy::Enemy(Vector2f startPosition, enemyConfig config) {
   this->position = startPosition;
   this->isShooting = false;
   this->isDead = false;
+  this->shootSpeed = 800;
 
   this->enemySprite.setTexture(TextureHolder::GetTexture("assets/enemies/sprites/" + config.file));
   this->enemySprite.rotate(config.rotation);
@@ -51,6 +52,33 @@ unsigned long long int Enemy::getScorePerKill() {
 
 bool Enemy::getDead() {
   return this->isDead;
+}
+
+bool Enemy::getCanShoot() {
+  return this->canShoot;
+}
+
+bool Enemy::getShootAtPlayer() {
+  return this->shootAtPlayer;
+}
+
+int Enemy::getShootSpeed() {
+  return this->shootSpeed;
+}
+
+Time Enemy::getShootClock() {
+  return this->shootClock.getElapsedTime();
+}
+
+void Enemy::restartShootClock() {
+  this->shootClock.restart();
+}
+
+Vector2f Enemy::getShootPosition() {
+  Vector2f newShootPosition = this->position;
+  newShootPosition.x -= this->gunPosition.x;
+  newShootPosition.y -= this->gunPosition.y;
+  return newShootPosition;
 }
 
 void Enemy::update(Time dt, Vector2f resolution) {

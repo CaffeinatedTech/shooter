@@ -8,6 +8,18 @@ Bullet::Bullet(bool playerFired, sf::Vector2f bulletPosition, int newBulletType,
   this->position.x = bulletPosition.x;
   this->position.y = bulletPosition.y;
   this->direction = Vector2f(0.0f, -1.0f);
+  if (!playerFired) {
+    if (atPlayer) {
+      // Work out the vector to the player
+      Vec2 newDirection = (target - position);
+      normalize(newDirection);
+      this->direction = newDirection;
+    }
+    else {
+      // Just shoot down
+      this->direction = Vector2f(0.f, 1.f);
+    }
+  }
 
   switch (this->bulletType) {
     case LASER1:

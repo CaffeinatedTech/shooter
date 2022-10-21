@@ -52,6 +52,17 @@ void Engine::update(Time dt) {
   // Process Enemies
   for (int i = 0; i < enemies.size(); i++) {
     enemies[i].update(dt, this->resolution);
+    // Enemy shooting
+    bool allowShoot = false;
+    if (enemies[i].getCanShoot()) {
+      if (enemies[i].getShootClock().asMilliseconds() > enemies[i].getShootSpeed()) {
+        allowShoot = true;
+      }
+    }
+    if (allowShoot) {
+      bullets.emplace_back(Bullet(false, enemies[i].getShootPosition(), Bullet::LASER1, enemies[i].getShootAtPlayer(), player.getCenterPosition()));
+      enemies[i].restartShootClock();
+    }
   }
 
 } // END update

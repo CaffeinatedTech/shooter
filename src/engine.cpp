@@ -50,10 +50,10 @@ Engine::Engine() {
   thisEnemyConfig.scorePerKill = 10000;
   thisEnemyConfig.speed = 5;
   thisEnemyConfig.difficulty = 1;
-  thisEnemyConfig.canShoot = false;
+  thisEnemyConfig.canShoot = true;
   thisEnemyConfig.shootAtPlayer = false;
-  thisEnemyConfig.gunPositionOffsetX = 0.f;
-  thisEnemyConfig.gunPositionOffsetY = 5.f;
+  thisEnemyConfig.gunPositionOffsetX = 80.f;
+  thisEnemyConfig.gunPositionOffsetY = 20.f;
   this->enemies.emplace_back(Vector2f(300.f, 10.f), thisEnemyConfig);
 }
 
