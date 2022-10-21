@@ -53,6 +53,13 @@ public:
     unsigned long long int getScorePerHit();
     unsigned long long int getScorePerKill();
 
+    bool getCanShoot();
+    bool getShootAtPlayer();
+    int getShootSpeed();
+    Time getShootClock();
+    void restartShootClock();
+    Vector2f getShootPosition();
+
     bool getDead();
 
     void update(Time dt, Vector2f resolution);
