@@ -81,6 +81,17 @@ Vector2f Enemy::getShootPosition() {
   return newShootPosition;
 }
 
+unsigned long long Enemy::takeDamage(int damage) {
+  unsigned long long int score = 0;
+  this->health -= damage;
+  this->isDead = this->health <= 0;
+  score += this->scorePerHit * damage;
+  if (this->isDead) {
+    score += this->scorePerKill;
+  }
+  return score;
+}
+
 void Enemy::update(Time dt, Vector2f resolution) {
   Vector2f newPosition = this->position;
   newPosition.y += this->speed;
