@@ -36,6 +36,25 @@ void Engine::update(Time dt) {
     }
   }
 
+  // Check if player ship colliding with enemy
+  for (int e = 0; e < enemies.size(); e++) {
+    if (player.getSprite().getGlobalBounds().intersects(enemies[e].getSprite().getGlobalBounds())) {
+      // Player hit an enemy
+      bool playerIsDead = player.takeDamage(20); // Magic number, some enemies should be big enough to kill the player outright.
+
+      // Destroy the enemy and increment the score - you did get a kill after all.
+      long long unsigned int thisCollisionScore = enemies[e].getScorePerKill();
+      player.increaseScore(thisCollisionScore);
+      waveScore += thisCollisionScore;
+      waveKills++;
+      enemies.erase(enemies.begin() + e);
+      if (playerIsDead) {
+        setGameState(GAMEOVER);
+      }
+      continue;
+    }
+  }
+
   // Process Bullets
   for (int i = 0; i < bullets.size(); i++) {
     if (bullets[i].getPosition().y < -150) {
@@ -64,6 +83,15 @@ void Engine::update(Time dt) {
           }
           continue;
         }
+      }
+    }
+    else { // Enemy Bullet
+      if (bullets[i].getSprite().getGlobalBounds().intersects(player.getSprite().getGlobalBounds())) {
+        bool playerIsDead = player.takeDamage(20); // Magic number, some bullet types should do more damage
+        if (playerIsDead) {
+          setGameState(GAMEOVER);
+        }
+        bullets.erase(bullets.begin() + i);
       }
     }
   }
