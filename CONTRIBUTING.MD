@@ -38,6 +38,5 @@ If you are supplying an enemy sprite (thank you) - then you need to make sure th
 * ...
 * Profit
 
-If you get stuck and have further questions, then please either hit me up on twitch `CaffeinatedTech`
-or twitter [@CaffeinatedTech](https://twitter.com/CaffeinatedTech) and I will help you out.
+If you get stuck and have further questions, then please hit me up on discord [CaffeinatedTech](https://discord.gg/QTFPXK6) and I will help you out.
  
