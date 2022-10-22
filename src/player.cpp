@@ -76,6 +76,10 @@ bool Player::takeDamage(int damage) {
   return isPlayerDead;
 }
 
+void Player::increaseScore(unsigned long long scoreIncrement) {
+  this->score += scoreIncrement;
+}
+
 Sprite Player::getSprite() {
   return this->playerSprite;
 }

@@ -47,6 +47,25 @@ void Engine::update(Time dt) {
     }
 
     bullets[i].update(dt, this->resolution, this->resolution.y);
+
+    // Check for collisions
+    // Player Bullets
+    if (bullets[i].getIsPlayerBullet()) {
+      for (int e = 0; e < enemies.size(); e++) {
+        if (bullets[i].getSprite().getGlobalBounds().intersects(enemies[e].getSprite().getGlobalBounds())) {
+          // Bullet hit enemy
+          long long unsigned int thisHitScore = enemies[e].takeDamage(5);
+          player.increaseScore(thisHitScore);
+          waveScore += thisHitScore;
+          bullets.erase(bullets.begin() + i);
+          if (enemies[e].getDead()) {
+            waveKills++;
+            enemies.erase(enemies.begin() + e);
+          }
+          continue;
+        }
+      }
+    }
   }
 
   // Process Enemies

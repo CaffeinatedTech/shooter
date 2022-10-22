@@ -53,7 +53,7 @@ public:
     bool takeDamage(int damage);
     void repair(int amount);
 
-
+    void increaseScore(unsigned long long int scoreIncrement);
 
     void setDirectionPressed(DIRECTION dir, bool pressed, float amount);
     void update(Time dt, Vector2f resolution, int levelWidth);
