@@ -84,4 +84,17 @@ void Engine::update(Time dt) {
     }
   }
 
+  // Update score text
+  if (displayedScore != player.getScore()) {
+    displayedScore = player.getScore();
+    scoreText.setString(to_string(displayedScore));
+    FloatRect scoreTextBounds = scoreText.getLocalBounds();
+    scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
+  }
+
+  // Update player health bar
+  float newPlayerHealthBarWidth = (player.getHealth() / 100.f) * 300.f;
+  if (newPlayerHealthBarWidth < 0) { newPlayerHealthBarWidth - 0.f; }
+  playerHealthBar.setSize(Vector2f(newPlayerHealthBarWidth, playerHealthBar.getSize().y));
+
 } // END update

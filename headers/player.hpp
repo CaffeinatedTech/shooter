@@ -52,8 +52,10 @@ public:
     int getRepairAmount();
     bool takeDamage(int damage);
     void repair(int amount);
+    int getHealth();
 
     void increaseScore(unsigned long long int scoreIncrement);
+    unsigned long long int getScore();
 
     void setDirectionPressed(DIRECTION dir, bool pressed, float amount);
     void update(Time dt, Vector2f resolution, int levelWidth);

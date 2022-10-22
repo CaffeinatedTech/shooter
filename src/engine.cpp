@@ -22,6 +22,15 @@ Engine::Engine() {
   backgroundSprite.setTextureRect(IntRect(0, backgroundY, levelWidth, resolution.y));
   backgroundSpeed = 0.5f;
 
+  playerHealthBarFrame.setSize(Vector2f(305, 35));
+  playerHealthBarFrame.setOutlineColor(Color::Blue);
+  playerHealthBarFrame.setOutlineThickness(2.5f);
+  playerHealthBarFrame.setFillColor(Color::Transparent);
+  playerHealthBarFrame.setPosition(Vector2f(97.5f, 17.5f));
+  playerHealthBar.setSize(Vector2f(300, 30));
+  playerHealthBar.setFillColor(Color::Green);
+  playerHealthBar.setPosition(Vector2f(100, 20));
+
   mainFont.loadFromFile("assets/fonts/slant_regular.ttf");
 
   displayedScore = 0;

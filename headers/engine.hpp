@@ -32,6 +32,8 @@ private:
     Font mainFont;
     Text scoreText;
     unsigned long long int displayedScore;
+    RectangleShape playerHealthBarFrame;
+    RectangleShape playerHealthBar;
 
     Time runningTime;
     Time waveTime;
