@@ -5,6 +5,7 @@
 #include "player.hpp"
 #include "bullet.hpp"
 #include "enemy.hpp"
+#include "enemyloader.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
