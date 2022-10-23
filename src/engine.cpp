@@ -1,3 +1,4 @@
+#include <random>
 #include "engine.hpp"
 
 const sf::Time Engine::TimePerFrame = seconds(1.f/60.f);
@@ -50,20 +51,18 @@ Engine::Engine() {
   previousGameState = gameState;
 
 // TODO - Build the enemy spawner
-  // Temporary enemy spawn - need to build a system to read in the enemy files
-  enemyConfig thisEnemyConfig;
-  thisEnemyConfig.file = "enemy1.png";
-  thisEnemyConfig.rotation = 180.f;
-  thisEnemyConfig.maxHealth = 15;
-  thisEnemyConfig.scorePerHit = 13;
-  thisEnemyConfig.scorePerKill = 10000;
-  thisEnemyConfig.speed = 5;
-  thisEnemyConfig.difficulty = 1;
-  thisEnemyConfig.canShoot = true;
-  thisEnemyConfig.shootAtPlayer = false;
-  thisEnemyConfig.gunPositionOffsetX = 80.f;
-  thisEnemyConfig.gunPositionOffsetY = 20.f;
-  this->enemies.emplace_back(Vector2f(300.f, 10.f), thisEnemyConfig);
+  // Temporary enemy spawn - need to build a spawner, and the wave system
+  EnemyLoader el;
+  el.loadEnemyConfigs();
+  vector<enemyConfig> loadedEnemyConfigs = el.getEnemyConfigs();
+  for (auto& conf: loadedEnemyConfigs) {
+    int randomXPos;
+    random_device rd;
+    mt19937 gen(rd());
+    randomXPos = rand() % (levelWidth - 200) + 100;
+    this->enemies.emplace_back(Vector2f(static_cast<float>(randomXPos), 0.f), conf);
+  }
+
 }
 
 void Engine::run() {
