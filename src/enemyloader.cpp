@@ -35,6 +35,10 @@ void EnemyLoader::loadEnemyConfigs() {
         testEnemy.gunPositionOffsetX = tree.get<float>("enemy.abilities.gunPositionOffsetX");
         testEnemy.gunPositionOffsetY = tree.get<float>("enemy.abilities.gunPositionOffsetY");
         enemyConfigs.emplace_back(testEnemy);
+
+        // Find minimum and maximum difficulties
+        if (testEnemy.difficulty > this->maximumDifficulty) { this->maximumDifficulty = testEnemy.difficulty; }
+        if (testEnemy.difficulty < this->minimumDifficulty) { this->minimumDifficulty = testEnemy.difficulty; }
       }
       else { // Sprite file is missing
         std::cout << entry.path().string() << " PASSED - missing sprite file" << '\n';
@@ -44,8 +48,17 @@ void EnemyLoader::loadEnemyConfigs() {
 
   std::cout << "--=== FOUND " << to_string(enemyConfigs.size()) << " ENEMY CONFIGURATIONS ===--" << '\n';
 
+  // Sort the configurations from easiest to most difficult.
+  sort(enemyConfigs.begin(), enemyConfigs.end(), [](enemyConfig &a, enemyConfig &b) {
+      return a.difficulty < b.difficulty;
+  });
+
 }
 
 vector<enemyConfig> EnemyLoader::getEnemyConfigs() {
   return this->enemyConfigs;
+}
+
+int EnemyLoader::getEnemyTypeCount() {
+  return static_cast<int>(this->enemyConfigs.size());
 }

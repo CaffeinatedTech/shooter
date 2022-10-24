@@ -1,4 +1,7 @@
 #include "engine.hpp"
+#include <sstream>
+#include <iostream>
+#include <cmath>
 
 using namespace sf;
 
@@ -110,6 +113,11 @@ void Engine::update(Time dt) {
       bullets.emplace_back(Bullet(false, enemies[i].getShootPosition(), Bullet::LASER1, enemies[i].getShootAtPlayer(), player.getCenterPosition()));
       enemies[i].restartShootClock();
     }
+
+    // Check if enemy is below the screen, and delete it
+    if (enemies[i].getPosition().y > resolution.y + 150) {
+      enemies.erase(enemies.begin() + i);
+    }
   }
 
   // Update score text
@@ -120,9 +128,43 @@ void Engine::update(Time dt) {
     scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
   }
 
+  // Check if Enemy Spawn list is empty, and there are no more enemies on the level - player has reached the end of the wave.
+  if (enemyList.empty() && enemies.empty()) {
+    waveNumber ++;
+    waveTime = Time::Zero;
+    enemyList = generateNextWave(waveNumber);
+
+    // TODO - add intermission and trigger it here.
+  }
+
+  // Process Enemy Spawn List
+  if (waveRunning) {
+    for (int i = 0; i < enemyList.size(); i++) {
+      if (waveTime.asMilliseconds() >= enemyList[i].spawnTime) {
+        enemies.emplace_back(Vector2f(static_cast<float>(enemyList[i].positionX), -100), enemyLoader.getEnemyConfigs()[enemyList[i].configIndex]);
+        enemyList.erase(enemyList.begin() + i);
+      }
+      else {
+        // There must not be any enemies with spawn times less than or equal to the running time.
+        // So don't bother iterating the rest of the list.
+        break;
+      }
+    }
+  }
+
   // Update player health bar
   float newPlayerHealthBarWidth = (player.getHealth() / 100.f) * 300.f;
   if (newPlayerHealthBarWidth < 0) { newPlayerHealthBarWidth - 0.f; }
   playerHealthBar.setSize(Vector2f(newPlayerHealthBarWidth, playerHealthBar.getSize().y));
+
+  stringstream ss;
+  for (auto& conf: enemyList) {
+    ss << enemyLoader.getEnemyConfigs()[conf.configIndex].difficulty << ", ";
+  }
+  ss << " | ";
+  ss << "Enemy Weights: " << enemyWeights[0] << "," << enemyWeights[1] << "," << enemyWeights[2] << " | Enemies: " << enemies.size() << " | ";
+  ss << bullets.size();
+
+  cout << ss.str() << " bullets" << " | SCORE:  " << player.getScore() << " | HEALTH: " << player.getHealth() << " | " << endl;
 
 } // END update

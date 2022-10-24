@@ -6,6 +6,7 @@
 #include "bullet.hpp"
 #include "enemy.hpp"
 #include "enemyloader.hpp"
+#include "enemyspawner.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -36,16 +37,25 @@ private:
     RectangleShape playerHealthBarFrame;
     RectangleShape playerHealthBar;
 
+    EnemyLoader enemyLoader;
+    vector<EnemySpawner> enemyList;
+
     Time runningTime;
     Time waveTime;
     int intermissionTime; // Number of seconds between waves.
     Time intermissionRunningTime;
+    bool waveRunning;
+    int waveNumber;
+
+    vector<int> enemyWeights;
 
     int waveKills;
     long long unsigned int waveScore;
 
     int gameState;
     int previousGameState;
+
+    void enemyWeightsReset();
 
 public:
     enum STATE { RUNNING, PAUSED, INTERMISSION, GAMEOVER, TITLE };
@@ -67,6 +77,8 @@ public:
     void togglePause();
 
     void setupFont(Text *textItem, const Font &font, const String &value, int size, Color colour);
+
+    vector<EnemySpawner> generateNextWave(int newWaveNumber);
 
 };
 

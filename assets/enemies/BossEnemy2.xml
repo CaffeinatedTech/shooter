@@ -7,7 +7,7 @@
 		<!-- One sprite per file, no spritesheets or animations -->
 		<!-- store the file in the 'enemies/sprites' directory with a unique name -->
 		<!-- royaltee free art only -->
-		<file>enemy33.png</file>
+		<file>enemy3.png</file>
 		<!-- If the sprite should be rotated so that it is pointing towards the bottom of the screen -->
 		<rotation>180</rotation>
 	</sprite>
