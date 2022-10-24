@@ -44,6 +44,10 @@ private:
     Text intermissionWaveKillsValue;
     Text intermissionWaveScoreLabel;
     Text intermissionWaveScoreValue;
+    Text gameOverLabel;
+    Text gameOverTotalScoreLabel;
+    Text gameOverTotalScoreValue;
+    Text gameOverStartButtonLabel;
 
     EnemyLoader enemyLoader;
     vector<EnemySpawner> enemyList;
@@ -64,6 +68,8 @@ private:
     int previousGameState;
 
     void enemyWeightsReset();
+    void updateGameOverScore();
+    void newGameReset();
 
 public:
     enum STATE { RUNNING, PAUSED, INTERMISSION, GAMEOVER, TITLE };

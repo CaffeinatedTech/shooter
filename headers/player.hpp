@@ -57,6 +57,7 @@ public:
 
     void increaseScore(unsigned long long int scoreIncrement);
     unsigned long long int getScore();
+    void setScore(unsigned long long int newScore);
 
     void setDirectionPressed(DIRECTION dir, bool pressed, float amount);
     void update(Time dt, Vector2f resolution, int levelWidth);
