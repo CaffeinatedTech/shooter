@@ -36,10 +36,35 @@ Engine::Engine() {
 
   displayedScore = 0;
 
-  // Score Text
+  // Setup Text objects
   setupFont(&scoreText, mainFont, std::to_string(displayedScore), 72, Color::Green);
   FloatRect scoreTextBounds = scoreText.getLocalBounds();
   scoreText.setPosition(Vector2f(resolution.x - scoreTextBounds.width - 20, 0));
+
+  setupFont(&intermissionWaveLabel, mainFont, "Waves Completed: ", 72, Color::Blue);
+  FloatRect intermissionWaveLabelBounds = intermissionWaveLabel.getLocalBounds();
+  intermissionWaveLabel.setPosition(Vector2f((resolution.x / 2 - intermissionWaveLabelBounds.width) + 200, 600));
+
+  setupFont(&intermissionWaveValue, mainFont, "9", 72, Color::Green);
+  intermissionWaveValue.setPosition(Vector2f(resolution.x / 2 + 250, 600));
+
+  setupFont(&intermissionTimer, mainFont, "Next Wave: 9", 120, Color::Yellow);
+  FloatRect intermissionTimerBounds = intermissionTimer.getLocalBounds();
+  intermissionTimer.setPosition(Vector2f(resolution.x / 2 - intermissionTimerBounds.width / 2, 300));
+
+  setupFont(&intermissionWaveKillsLabel, mainFont, "Last Wave Kills: ", 72, Color::Blue);
+  FloatRect intermissionWaveKillsLabelBounds = intermissionWaveKillsLabel.getLocalBounds();
+  intermissionWaveKillsLabel.setPosition(Vector2f((resolution.x / 2 - intermissionWaveKillsLabelBounds.width) + 200, 680));
+
+  setupFont(&intermissionWaveKillsValue, mainFont, "9", 72, Color::Green);
+  intermissionWaveKillsValue.setPosition(Vector2f(resolution.x / 2 + 250, 680));
+
+  setupFont(&intermissionWaveScoreLabel, mainFont, "Last Wave Score: ", 72, Color::Blue);
+  FloatRect intermissionWaveScoreLabelBounds = intermissionWaveScoreLabel.getLocalBounds();
+  intermissionWaveScoreLabel.setPosition(Vector2f((resolution.x / 2 - intermissionWaveScoreLabelBounds.width) + 200, 760));
+
+  setupFont(&intermissionWaveScoreValue, mainFont, "9", 72, Color::Green);
+  intermissionWaveScoreValue.setPosition(Vector2f(resolution.x / 2 + 250, 760));
 
   intermissionTime = 6; // Number of seconds between waves
   runningTime = Time::Zero;
@@ -51,6 +76,8 @@ Engine::Engine() {
   previousGameState = gameState;
   waveRunning = true;
   waveNumber = 1;
+  waveKills = 0;
+  waveScore = 0;
 
   enemyLoader.loadEnemyConfigs();
   enemyWeightsReset();

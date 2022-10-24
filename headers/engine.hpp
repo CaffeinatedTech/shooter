@@ -37,6 +37,14 @@ private:
     RectangleShape playerHealthBarFrame;
     RectangleShape playerHealthBar;
 
+    Text intermissionWaveLabel;
+    Text intermissionWaveValue;
+    Text intermissionTimer;
+    Text intermissionWaveKillsLabel;
+    Text intermissionWaveKillsValue;
+    Text intermissionWaveScoreLabel;
+    Text intermissionWaveScoreValue;
+
     EnemyLoader enemyLoader;
     vector<EnemySpawner> enemyList;
 
@@ -80,6 +88,7 @@ public:
 
     vector<EnemySpawner> generateNextWave(int newWaveNumber);
 
+    void repairPlayer();
 };
 
 
