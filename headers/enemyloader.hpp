@@ -14,12 +14,15 @@ using namespace std;
 class EnemyLoader {
 private:
     vector<enemyConfig> enemyConfigs;
+    int minimumDifficulty;
+    int maximumDifficulty;
 
 public:
     EnemyLoader();
 
     void loadEnemyConfigs();
     vector<enemyConfig> getEnemyConfigs();
+    int getEnemyTypeCount();
 };
 
 

@@ -49,19 +49,12 @@ Engine::Engine() {
   // Set game state to running
   gameState = STATE::RUNNING;
   previousGameState = gameState;
+  waveRunning = true;
+  waveNumber = 1;
 
-// TODO - Build the enemy spawner
-  // Temporary enemy spawn - need to build a spawner, and the wave system
-  EnemyLoader el;
-  el.loadEnemyConfigs();
-  vector<enemyConfig> loadedEnemyConfigs = el.getEnemyConfigs();
-  for (auto& conf: loadedEnemyConfigs) {
-    int randomXPos;
-    random_device rd;
-    mt19937 gen(rd());
-    randomXPos = rand() % (levelWidth - 200) + 100;
-    this->enemies.emplace_back(Vector2f(static_cast<float>(randomXPos), 0.f), conf);
-  }
+  enemyLoader.loadEnemyConfigs();
+  enemyWeightsReset();
+  enemyList = generateNextWave(waveNumber);
 
 }
 
@@ -83,6 +76,9 @@ void Engine::run() {
 
     timeSinceLastUpdate += dt;
     runningTime += dt;
+    if (waveRunning) {
+      waveTime += dt;
+    }
     if (this->getGameState() == STATE::INTERMISSION) {
       intermissionRunningTime += dt;
     }
@@ -96,6 +92,47 @@ void Engine::run() {
 
     draw();
   }
+}
+
+void Engine::enemyWeightsReset() {
+  this->enemyWeights.clear();
+  int weightToDistribute = 100;
+  for (int i = 0; i < enemyLoader.getEnemyTypeCount(); i++) {
+    this->enemyWeights.push_back(weightToDistribute);
+    weightToDistribute = 0;
+  }
+}
+
+vector<EnemySpawner> Engine::generateNextWave(int newWaveNumber) {
+  vector<EnemySpawner> newEnemyList;
+
+  // Update enemy weights
+  if (newWaveNumber > 1) {
+    for (int e = enemyLoader.getEnemyTypeCount() - 1; e >= 0; e--) {
+      if (e > 0) {
+        if (enemyWeights[e - 1] >= 10 - (e+1)) {
+          enemyWeights[e - 1] -= 10 - (e+1);
+          enemyWeights[e] += 10 - (e+1);
+        }
+      }
+    }
+  }
+
+  // Generate an enemy list
+  srand ((unsigned) time(nullptr));
+  int randomXPos;
+  int spawnTime = 0;
+  int enemyToSpawn = 1;
+  random_device rd;
+  mt19937 gen(rd());
+  discrete_distribution<int> d (enemyWeights.begin(), enemyWeights.end());
+  for (int i = 0; i < 12; i ++) {
+    randomXPos = rand() % (levelWidth - 200) + 100;
+    spawnTime += rand() % (3000) + 1;
+    enemyToSpawn = d(gen);
+    newEnemyList.emplace_back(enemyToSpawn, randomXPos, spawnTime);
+  }
+  return newEnemyList;
 }
 
 int Engine::getGameState() {
