@@ -66,6 +66,21 @@ Engine::Engine() {
   setupFont(&intermissionWaveScoreValue, mainFont, "9", 72, Color::Green);
   intermissionWaveScoreValue.setPosition(Vector2f(resolution.x / 2 + 250, 760));
 
+  setupFont(&gameOverLabel, mainFont, "GAME OVER", 120, Color::Yellow);
+  FloatRect gameOverLabelBounds = gameOverLabel.getLocalBounds();
+  gameOverLabel.setPosition(Vector2f(resolution.x / 2 - gameOverLabelBounds.width / 2, 300));
+
+  setupFont(&gameOverTotalScoreLabel, mainFont, "Total Score: ", 72, Color::Blue);
+  FloatRect gameOverTotalScoreLabelBounds = gameOverTotalScoreLabel.getLocalBounds();
+  gameOverTotalScoreLabel.setPosition(Vector2f((resolution.x / 2 - gameOverTotalScoreLabelBounds.width), 600));
+
+  setupFont(&gameOverTotalScoreValue, mainFont, "9", 72, Color::Green);
+  gameOverTotalScoreValue.setPosition(Vector2f(gameOverTotalScoreLabel.getPosition().x + gameOverTotalScoreLabelBounds.width + 50, 600));
+
+  setupFont(&gameOverStartButtonLabel, mainFont, "Press ENTER to try again", 72, Color::Blue);
+  FloatRect gameOverStartButtonLabelBounds = gameOverStartButtonLabel.getLocalBounds();
+  gameOverStartButtonLabel.setPosition(Vector2f((resolution.x / 2 - gameOverStartButtonLabelBounds.width / 2),760));
+
   intermissionTime = 6; // Number of seconds between waves
   runningTime = Time::Zero;
   waveTime = Time::Zero;
@@ -119,6 +134,25 @@ void Engine::run() {
 
     draw();
   }
+}
+
+void Engine::newGameReset() {
+  this->enemyWeightsReset();
+  this->enemies.clear();
+  this->enemyList.clear();
+  this->waveKills = 0;
+  this->waveNumber = 1;
+  this->waveScore = 0;
+  player.setScore(0);
+  player.repair(player.getMaxHealth());
+  this->runningTime = Time::Zero;
+  this->waveTime = Time::Zero;
+  this->enemyList = generateNextWave(this->waveNumber);
+  this->bullets.clear();
+}
+
+void Engine::updateGameOverScore() {
+  this->gameOverTotalScoreValue.setString(to_string(player.getScore()));
 }
 
 void Engine::enemyWeightsReset() {

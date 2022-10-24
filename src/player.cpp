@@ -71,7 +71,13 @@ void Player::repair(int amount) {
 bool Player::takeDamage(int damage) {
   bool isPlayerDead;
   this->health -= damage;
-  isPlayerDead = this->health <= 0;
+  if (this->health <= 0) {
+    isPlayerDead = true;
+    this->health = 0;
+  }
+  else {
+    isPlayerDead = false;
+  }
   this->repairClock.restart();
   return isPlayerDead;
 }
@@ -90,6 +96,10 @@ void Player::increaseScore(unsigned long long scoreIncrement) {
 
 unsigned long long Player::getScore() {
   return this->score;
+}
+
+void Player::setScore(unsigned long long newScore) {
+  this->score = newScore;
 }
 
 Sprite Player::getSprite() {

@@ -56,6 +56,7 @@ void Engine::update(Time dt) {
       enemies.erase(enemies.begin() + e);
       if (playerIsDead) {
         setGameState(GAMEOVER);
+        updateGameOverScore();
       }
       continue;
     }
@@ -96,6 +97,7 @@ void Engine::update(Time dt) {
         bool playerIsDead = player.takeDamage(20); // Magic number, some bullet types should do more damage
         if (playerIsDead) {
           setGameState(GAMEOVER);
+          updateGameOverScore();
         }
         bullets.erase(bullets.begin() + i);
       }

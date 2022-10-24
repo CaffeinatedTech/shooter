@@ -34,6 +34,13 @@ void Engine::draw() {
     window.draw(intermissionWaveScoreValue);
   }
 
+  if (gameState == STATE::GAMEOVER) {
+    window.draw(gameOverLabel);
+    window.draw(gameOverTotalScoreLabel);
+    window.draw(gameOverTotalScoreValue);
+    window.draw(gameOverStartButtonLabel);
+  }
+
   window.display();
 
 }

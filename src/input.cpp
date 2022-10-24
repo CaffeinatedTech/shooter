@@ -28,6 +28,12 @@ void Engine::input() {
         }
       }
 
+      // Handle Retry (game over, start again)
+      if (Keyboard::isKeyPressed(Keyboard::Enter)) {
+        this->setGameState(STATE::RUNNING);
+        this->newGameReset();
+      }
+
       // Shooting
       if (Keyboard::isKeyPressed(Keyboard::Space)) {
         if (!player.getShooting()) {
