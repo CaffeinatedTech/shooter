@@ -31,7 +31,7 @@ void Engine::update(Time dt) {
   mainView.setCenter(newMainViewPos);
 
   // Player Shooting
-  if (player.getShooting()) {
+  if (gameState == STATE::RUNNING && player.getShooting()) {
     // Don't shoot too often
     if (player.getShootClock().asMilliseconds() > player.getShootSpeed()) {
       bullets.emplace_back(true, player.getShootPosition(), Bullet::LASER1, false, Vector2f(0.0f, 1.0f));
@@ -39,12 +39,7 @@ void Engine::update(Time dt) {
     }
   }
   else { // Not shooting, start repairing
-    if (player.getHealth() < player.getMaxHealth()) {
-      if (player.getRepairClock().asMilliseconds() > player.getRepairDelay()) {
-        player.repair(player.getRepairAmount());
-      }
-    }
-
+    repairPlayer();
   }
 
   // Check if player ship colliding with enemy
@@ -142,7 +137,28 @@ void Engine::update(Time dt) {
     waveTime = Time::Zero;
     enemyList = generateNextWave(waveNumber);
 
-    // TODO - add intermission and trigger it here.
+    // Put us into intermission
+    waveRunning = false;
+    gameState = STATE::INTERMISSION;
+    intermissionWaveValue.setString(to_string(waveNumber - 1));
+    intermissionWaveKillsValue.setString(to_string(waveKills));
+    intermissionWaveScoreValue.setString(to_string(waveScore));
+    repairPlayer();
+  }
+
+  if (gameState == STATE::INTERMISSION) {
+    if (intermissionRunningTime.asSeconds() >= intermissionTime) {
+      waveRunning = true;
+      gameState = STATE::RUNNING;
+      intermissionRunningTime = Time::Zero;
+      waveKills = 0;
+      waveScore = 0;
+    }
+
+    stringstream ss;
+    ss << ceil(intermissionTime - static_cast<int>(intermissionRunningTime.asSeconds()));
+    intermissionTimer.setString("Next Wave: " + ss.str());
+
   }
 
   // Process Enemy Spawn List
@@ -169,10 +185,21 @@ void Engine::update(Time dt) {
   for (auto& conf: enemyList) {
     ss << enemyLoader.getEnemyConfigs()[conf.configIndex].difficulty << ", ";
   }
-  ss << " | ";
-  ss << "Enemy Weights: " << enemyWeights[0] << "," << enemyWeights[1] << "," << enemyWeights[2] << " | Enemies: " << enemies.size() << " | ";
+  ss << " | Enemy Weights: ";
+  for (auto& w: enemyWeights) {
+    ss << w << ',';
+  }
+  ss << " | Enemies: " << enemies.size() << " | ";
   ss << bullets.size();
 
   cout << ss.str() << " bullets" << " | SCORE:  " << player.getScore() << " | HEALTH: " << player.getHealth() << " | " << endl;
 
 } // END update
+
+void Engine::repairPlayer() {
+  if (player.getHealth() < player.getMaxHealth()) {
+    if (player.getRepairClock().asMilliseconds() > player.getRepairDelay()) {
+      player.repair(player.getRepairAmount());
+    }
+  }
+}
