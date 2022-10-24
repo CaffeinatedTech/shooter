@@ -80,6 +80,10 @@ int Player::getHealth() {
   return this->health;
 }
 
+int Player::getMaxHealth() {
+  return this->maxHealth;
+}
+
 void Player::increaseScore(unsigned long long scoreIncrement) {
   this->score += scoreIncrement;
 }

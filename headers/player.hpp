@@ -53,6 +53,7 @@ public:
     bool takeDamage(int damage);
     void repair(int amount);
     int getHealth();
+    int getMaxHealth();
 
     void increaseScore(unsigned long long int scoreIncrement);
     unsigned long long int getScore();
