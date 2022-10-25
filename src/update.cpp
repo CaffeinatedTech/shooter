@@ -140,8 +140,7 @@ void Engine::update(Time dt) {
     enemyList = generateNextWave(waveNumber);
 
     // Put us into intermission
-    waveRunning = false;
-    gameState = STATE::INTERMISSION;
+    setGameState(STATE::INTERMISSION);
     intermissionWaveValue.setString(to_string(waveNumber - 1));
     intermissionWaveKillsValue.setString(to_string(waveKills));
     intermissionWaveScoreValue.setString(to_string(waveScore));
@@ -150,8 +149,7 @@ void Engine::update(Time dt) {
 
   if (gameState == STATE::INTERMISSION) {
     if (intermissionRunningTime.asSeconds() >= intermissionTime) {
-      waveRunning = true;
-      gameState = STATE::RUNNING;
+      setGameState(STATE::RUNNING);
       intermissionRunningTime = Time::Zero;
       waveKills = 0;
       waveScore = 0;
@@ -164,7 +162,7 @@ void Engine::update(Time dt) {
   }
 
   // Process Enemy Spawn List
-  if (waveRunning) {
+  if (gameState == STATE::RUNNING) {
     for (int i = 0; i < enemyList.size(); i++) {
       if (waveTime.asMilliseconds() >= enemyList[i].spawnTime) {
         enemies.emplace_back(Vector2f(static_cast<float>(enemyList[i].positionX), -100), enemyLoader.getEnemyConfigs()[enemyList[i].configIndex]);

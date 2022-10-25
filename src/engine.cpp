@@ -87,9 +87,8 @@ Engine::Engine() {
   intermissionRunningTime = Time::Zero;
 
   // Set game state to running
-  gameState = STATE::RUNNING;
+  setGameState(STATE::RUNNING);
   previousGameState = gameState;
-  waveRunning = true;
   waveNumber = 1;
   waveKills = 0;
   waveScore = 0;
@@ -118,7 +117,7 @@ void Engine::run() {
 
     timeSinceLastUpdate += dt;
     runningTime += dt;
-    if (waveRunning) {
+    if (gameState == STATE::RUNNING) {
       waveTime += dt;
     }
     if (this->getGameState() == STATE::INTERMISSION) {
@@ -202,6 +201,15 @@ int Engine::getGameState() {
 
 void Engine::setGameState(int newGameState) {
   this->gameState = newGameState;
+  if(newGameState == STATE::INTERMISSION) {
+    backgroundSpeed = 1.5f;
+  }
+  else if (newGameState == STATE::GAMEOVER) {
+    backgroundSpeed = 0.0f;
+  }
+  else {
+    backgroundSpeed = 0.5f;
+  }
 }
 
 void Engine::togglePause() {

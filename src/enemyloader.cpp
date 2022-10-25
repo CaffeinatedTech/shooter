@@ -1,7 +1,3 @@
-//
-// Created by adam on 22/10/22.
-//
-
 #include "enemyloader.hpp"
 #include <iostream>
 
