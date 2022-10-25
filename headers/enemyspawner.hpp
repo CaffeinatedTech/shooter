@@ -1,7 +1,10 @@
 #ifndef SHOOTER_ENEMYSPAWNER_HPP
 #define SHOOTER_ENEMYSPAWNER_HPP
 
-
+/**
+ * EnemySpawner class
+ * This holds the details for spawning an enemy.  Which enemy configuration to spawn, when and where.
+ */
 class EnemySpawner {
 public:
     int configIndex;

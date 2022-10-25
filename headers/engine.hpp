@@ -56,7 +56,6 @@ private:
     Time waveTime;
     int intermissionTime; // Number of seconds between waves.
     Time intermissionRunningTime;
-    bool waveRunning;
     int waveNumber;
 
     vector<int> enemyWeights;
